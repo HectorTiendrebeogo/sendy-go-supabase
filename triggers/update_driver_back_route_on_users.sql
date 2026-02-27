@@ -22,7 +22,7 @@ BEGIN
         back_route := current_meta->'back_route';
         
         -- Créer le nouvel objet de départ (start)
-        new_start := jsonb_build_object('lat', NEW.latitude, 'lng', NEW.longitude);
+        new_start := jsonb_build_object('lat', NEW.latitude, 'lng', NEW.longitude, 'address_name', current_meta->'back_route'->'end'->>'address_name');
 
         -- Mettre à jour la position 'start' dans le JSON back_route
         -- jsonb_set(target, path, new_value)

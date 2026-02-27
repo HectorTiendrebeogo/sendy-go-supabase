@@ -76,6 +76,7 @@ CREATE TABLE IF NOT EXISTS user_documents (
   identity_document_verso_url TEXT NOT NULL, -- Carte d'identité ou passeport
   vehicle_document_url TEXT NOT NULL, -- Carte grise
   vehicle_document_verso_url TEXT NOT NULL, -- Carte grise
+  selfie_url TEXT NOT NULL, -- Photo de profil du conducteur
   verification_status verification_status DEFAULT 'PENDING', -- pour les conducteurs
   
   created_at TIMESTAMP DEFAULT NOW(),
@@ -189,18 +190,18 @@ CREATE INDEX idx_offers_order_id_delivery_person_id ON offers(order_id,delivery_
 -- =========================
 -- OTPs pour les livraisons
 -- =========================
-CREATE TABLE IF NOT EXISTS otps (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  order_id UUID UNIQUE REFERENCES orders(id) ON DELETE CASCADE,
-  code VARCHAR(10) NOT NULL,
-  is_used BOOLEAN DEFAULT FALSE,
-  expires_at TIMESTAMP NOT NULL,
+-- CREATE TABLE IF NOT EXISTS otps (
+  -- id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  -- order_id UUID UNIQUE REFERENCES orders(id) ON DELETE CASCADE,
+  -- code VARCHAR(10) NOT NULL,
+  -- is_used BOOLEAN DEFAULT FALSE,
+  -- expires_at TIMESTAMP NOT NULL,
 
-  created_at TIMESTAMP DEFAULT NOW(),
-  updated_at TIMESTAMP DEFAULT NOW()
-);
+  -- created_at TIMESTAMP DEFAULT NOW(),
+  -- updated_at TIMESTAMP DEFAULT NOW()
+-- );
 
-CREATE INDEX idx_otps_code ON otps(code);
+-- CREATE INDEX idx_otps_code ON otps(code);
 
 -- =========================
 -- PROMO CODES
@@ -286,15 +287,15 @@ CREATE TABLE IF NOT EXISTS reviews (
 -- =========================
 -- DISPUTES
 -- =========================
-CREATE TABLE IF NOT EXISTS disputes (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  order_id UUID UNIQUE REFERENCES orders(id),
-  raised_by UUID REFERENCES users(id), -- Client ou Livreur
-  status dispute_status DEFAULT 'OPEN',
+-- CREATE TABLE IF NOT EXISTS disputes (
+  -- id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  -- order_id UUID UNIQUE REFERENCES orders(id),
+  -- raised_by UUID REFERENCES users(id), -- Client ou Livreur
+  -- status dispute_status DEFAULT 'OPEN',
 
-  created_at TIMESTAMP DEFAULT NOW(),
-  updated_at TIMESTAMP DEFAULT NOW()
-);
+  -- created_at TIMESTAMP DEFAULT NOW(),
+  -- updated_at TIMESTAMP DEFAULT NOW()
+-- );
 
 
 -- Migration: Création de la table otp_verifications
